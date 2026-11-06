@@ -66,6 +66,7 @@
       <span class="targhetta">nessun dato inviato a terzi</span>
       <span class="targhetta">MIT</span>
       <span class="targhetta">Python 3.11</span>
+      <span class="targhetta">costruito con AutoClaw</span>
     </div>
   </div>
 </header>
@@ -219,10 +220,21 @@ uv pip install --python D:\fonti-primarie\.venv\Scripts\python.exe trafilatura d
 python atti_pdf.py delibera.pdf --out delibera.md</pre>
   <p>Serve anche <strong>Tesseract</strong> per l'OCR (con la lingua italiana) e
     <strong>pdftotext</strong> per la lettura veloce: due binari gratuiti per Windows.</p>
-  <p style="margin-top:26px"><a class="bottone" href="https://github.com/EmilianoCuti/fonti-primarie-it">Codice e documentazione su GitHub</a></p>
+  <p style="margin-top:26px"><a class="bottone" href="https://github.com/DraculaCuti/fonti-primarie-it">Codice e documentazione su GitHub</a></p>
 </section>
 
 </main>
+
+<section>
+  <h2>Come è stato costruito</h2>
+  <p>Il progetto è nato dentro <strong>AutoClaw</strong>, usato come ambiente di sviluppo e come
+    banco di prova: ogni script è stato scritto, misurato e corretto in sessione, con i test
+    eseguiti su documenti reali — atti del Comune di Lodi, tracciati ISTAT, un PDF con tre
+    tabelle. I difetti trovati durante le prove sono documentati nella specifica, compresi
+    quelli che avevano fatto sembrare funzionante qualcosa che non lo era.</p>
+  <p>La specifica operativa che l'agente legge è in <code>SKILL.md</code>; gli script sono
+    indipendenti e funzionano anche da soli, da riga di comando, senza l'app.</p>
+</section>
 
 <footer class="wrap">
   <p>Gli script sono distribuiti con licenza MIT. Le fonti citate negli esempi sono
