@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fonti primarie — strumenti per giornalismo investigativo italiano</title>
+<meta name="description" content="Nove strumenti locali che trasformano atti, delibere, bilanci e sedute consiliari in citazioni verificabili. Gratuiti, senza chiavi API, senza servizi cloud.">
+<style>
+  :root{
+    --carta:#f7f4ee; --carta2:#fffdf8; --inchiostro:#1a1815; --grigio:#6b6459;
+    --filo:#ddd5c7; --accento:#a8341f; --dato:#0f4c5c;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--carta);color:var(--inchiostro);
+    font:17px/1.65 ui-serif,Georgia,"Times New Roman",serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  header{border-bottom:1px solid var(--filo);background:linear-gradient(180deg,var(--carta2),var(--carta))}
+  .testata{padding:56px 0 40px}
+  .occhiello{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accento);margin-bottom:18px}
+  h1{font-size:clamp(30px,5vw,46px);line-height:1.1;margin:0 0 18px;font-weight:600;letter-spacing:-.02em}
+  .sommario{font-size:19px;color:#3b352d;max-width:44ch;margin:0 0 26px}
+  .targhette{display:flex;flex-wrap:wrap;gap:8px}
+  .targhetta{font:500 12.5px/1 var(--mono);padding:8px 11px;border:1px solid var(--filo);border-radius:999px;background:var(--carta2);color:var(--grigio)}
+  main{padding:8px 0 40px}
+  section{padding:38px 0;border-bottom:1px solid var(--filo)}
+  section:last-of-type{border-bottom:0}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);margin:0 0 20px;font-weight:600}
+  h3{font-size:21px;margin:26px 0 8px;font-weight:600;letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  .due{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  @media(max-width:720px){.due{grid-template-columns:1fr;gap:20px}}
+  table{width:100%;border-collapse:collapse;font-size:15.5px;margin:4px 0 6px}
+  th,td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--filo);vertical-align:top}
+  th{font:600 11.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grigio)}
+  td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--dato);font-size:14.5px}
+  pre{background:#1f1d1a;color:#e8e2d6;padding:18px 20px;border-radius:6px;overflow-x:auto;font:13px/1.6 var(--mono);margin:0 0 8px}
+  pre .c{color:#9d9484}
+  pre .g{color:#8fb89b}
+  code{font:13.5px var(--mono);background:#efe9dd;padding:2px 5px;border-radius:3px}
+  .didascalia{font-size:14px;color:var(--grigio);margin:0 0 22px}
+  ul{margin:0 0 16px;padding-left:22px}
+  li{margin-bottom:7px}
+  .schede{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .scheda{background:var(--carta2);border:1px solid var(--filo);border-radius:8px;padding:18px 20px}
+  .scheda h4{margin:0 0 6px;font-size:16px;font-weight:600}
+  .scheda p{margin:0;font-size:14.5px;color:#4a443b}
+  .scheda .m{font:12px var(--mono);color:var(--dato);display:block;margin-bottom:8px}
+  footer{padding:34px 0 60px;color:var(--grigio);font-size:14.5px}
+  a{color:var(--accento)}
+  .bottone{display:inline-block;background:var(--inchiostro);color:var(--carta2);text-decoration:none;padding:13px 22px;border-radius:6px;font:600 14px/1 var(--mono);letter-spacing:.03em}
+  .bottone:hover{background:var(--accento)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap testata">
+    <div class="occhiello">Archivio e verifica · giornalismo investigativo</div>
+    <h1>Nove strumenti per trasformare un atto in una citazione verificabile</h1>
+    <p class="sommario">Albi pretori, delibere, bilanci, sedute consiliari. Ricerca, estrazione,
+      conteggio e prova del documento. Tutto in locale, senza chiavi API e senza servizi cloud.</p>
+    <div class="targhette">
+      <span class="targhetta">gratuito</span>
+      <span class="targhetta">nessuna API key</span>
+      <span class="targhetta">nessun dato inviato a terzi</span>
+      <span class="targhetta">MIT</span>
+      <span class="targhetta">Python 3.11</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2>Il problema</h2>
+  <div class="due">
+    <div>
+      <p>Un modello linguistico legge un atto comunale e sbaglia tre cose su quattro: confonde
+        l'importo con il ribasso, prende il CIG per un codice qualsiasi, trasforma una tabella
+        di bilancio in un paragrafo.</p>
+      <p>In un'inchiesta questo non è un fastidio: è un pezzo che cade in revisione legale
+        dopo due settimane di lavoro.</p>
+    </div>
+    <div>
+      <p>Il punto non è leggere meglio: è poter <strong>citare</strong>. «Delibera n. 42,
+        pagina 3, importo 248.500,00, consultata il 4 novembre 2026» è una frase verificabile.
+        «Circa 250mila euro» non lo è.</p>
+      <p>Questi strumenti rinunciano a essere intelligenti e fanno una cosa sola: portano
+        il documento originale dentro il dossier, con la riga di citazione già pronta.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Come funziona</h2>
+  <p>Ogni comando fa un passo solo e stampa sempre la citazione. La catena completa per
+    un'inchiesta su appalti comunali:</p>
+<pre><span class="c"># 1. elenco atti di un albo pretorio, in una sola chiamata</span>
+albo.py "https://www.comune.xxx.it/albo" --out-dir D:\ricerche\appalti
+<span class="c"># 2. testo per pagina, con OCR adattivo solo dove serve</span>
+atti_pdf.py --dir D:\ricerche\appalti\fonti\atti --out-dir ...\dati
+<span class="c"># 3. tabelle e bilanci: Docling su server remoto, zero RAM locale</span>
+tabelle.py rendiconto.pdf --out dati\rendiconto.md
+<span class="c"># 4. conteggi veri, non "circa"</span>
+dati_query.py appalti.csv --converti --controlla importo --chiave cig
+<span class="c"># 5. prova che il portale è cambiato</span>
+wayback_prova.py "https://www.comune.xxx.it/bandi" --data 2026-03-14 --cerca "248.500"</pre>
+  <p class="didascalia">Cinque comandi, cinque citazioni. Nessuna chiave, nessun abbonamento.</p>
+</section>
+
+<section>
+  <h2>I nove strumenti</h2>
+  <div class="schede">
+    <div class="scheda"><span class="m">albo.py</span><h4>Albo pretorio</h4>
+      <p>Scarica la pagina, trova i PDF, li preleva in parallelo ed estrae data, oggetto,
+        importo e CIG in un indice tabellare.</p></div>
+    <div class="scheda"><span class="m">atti_pdf.py</span><h4>Atti in PDF</h4>
+      <p>Cascata <code>pdftotext</code> → PyMuPDF → OCR 200/300 dpi. Sa quali pagine non
+        hanno testo e lo dice invece di inventare.</p></div>
+    <div class="scheda"><span class="m">tabelle.py</span><h4>Bilanci e tabelle</h4>
+      <p>Docling su server pubblico: ricostruisce righe e colonne dove <code>pdfplumber</code>
+        si arrende. Zero RAM e zero installazioni.</p></div>
+    <div class="scheda"><span class="m">dati_query.py</span><h4>Conteggi</h4>
+      <p>SQL su CSV/Parquet con DuckDB. Righe, somme, nulli, duplicati, buchi di numerazione:
+        il controllo che precede ogni consegna.</p></div>
+    <div class="scheda"><span class="m">fonti_web.py</span><h4>Pagine della PA</h4>
+      <p>Testo pulito con data di pubblicazione, e fallback su Jina Reader per i portali
+        che si caricano via javascript.</p></div>
+    <div class="scheda"><span class="m">wayback_prova.py</span><h4>Prova del cambiamento</h4>
+      <p>Snapshot datati dell'Internet Archive: cosa diceva la pagina il 14 marzo, e se la
+        stringa oggi non c'è più.</p></div>
+    <div class="scheda"><span class="m">istat_comune.py</span><h4>Demografia</h4>
+      <p>Tracciati ufficiali ISTAT per comune, con la serie storica e la verifica di
+        continuità tra un anno e l'altro.</p></div>
+    <div class="scheda"><span class="m">archivio.py</span><h4>Memoria semantica</h4>
+      <p>Interroga un indice locale di 8.612 documenti (atti, relazioni, articoli) con
+        <code>embeddinggemma-2</code>: risponde in 0,2-0,5 s.</p></div>
+    <div class="scheda"><span class="m">social.py</span><h4>Fonti social</h4>
+      <p>Telegram, Bluesky e YouTube senza chiavi. Le sedute dei consigli comunali,
+        con durata e sottotitoli scaricabili.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Numeri misurati, non stimati</h2>
+  <table>
+    <thead><tr><th>Operazione</th><th>Prima</th><th>Dopo</th><th>Perché</th></tr></thead>
+    <tbody>
+      <tr><td>1 PDF con testo nativo</td><td class="num">3.238 ms</td>
+        <td class="num">536 ms</td><td><code>pdftotext</code> prima di importare PyMuPDF</td></tr>
+      <tr><td>6 PDF in batch</td><td class="num">3.310 ms</td>
+        <td class="num">2.540 ms</td><td>un processo, tre lavori in parallelo</td></tr>
+      <tr><td><code>group by</code> su 200.000 righe</td><td class="num">158 ms</td>
+        <td class="num">5 ms</td><td>Parquet invece di CSV</td></tr>
+      <tr><td>Righe tabellari da un PDF con 3 tabelle</td><td class="num">0</td>
+        <td class="num">51</td><td>Jina appiattisce, Docling ricostruisce</td></tr>
+      <tr><td>Ricerca semantica su 8.612 documenti</td><td class="num">—</td>
+        <td class="num">107-490 ms</td><td>modello in memoria, conteggi sull'intero corpus</td></tr>
+    </tbody>
+  </table>
+  <p class="didascalia">Misure eseguite su questa macchina, Windows, CPU senza GPU.</p>
+</section>
+
+<section>
+  <h2>Un esempio vero</h2>
+  <p>Ricerca sul canale YouTube del Comune di Lodi, senza chiave API:</p>
+<pre><span class="g">$</span> social.py youtube "consiglio comunale lodi" -n 3
+
+• Consiglio Comunale - 22 ottobre 2026
+   canale: ComunediLodi | durata: 334:23
+   https://www.youtube.com/watch?v=cDsCnpmymIU
+   <span class="c">(seduta: si può scaricare l'audio e trascriverlo)</span>
+
+• Consiglio Comunale - 28 luglio 2026
+   canale: ComunediLodi | durata: 256:40</pre>
+  <p>Cinque ore e mezza di aula diventano un testo ricercabile: l'intervento sul bilancio
+    si cita con la data della seduta, non con «l'ho sentito nel video».</p>
+
+  <h3>E la demografia, con la prova che i conti tornano</h3>
+<pre><span class="g">$</span> istat_comune.py --comune Lodi --sigla LO --anni 2023-2024
+
+### 2023  [demo.istat.it/data/p2/P2_2023_it_098_Lodi.zip]
+  Popolazione censita al 1° gennaio - Totale = 44.843
+  Nati vivi - Totale = 310
+  Morti - Totale = 511
+  Popolazione censita al 31 dicembre - Totale = <span class="g">45.158</span>
+
+### 2024
+  Popolazione censita al 1° gennaio - Totale = <span class="g">45.158</span></pre>
+  <p>La chiusura del 2023 coincide con l'apertura del 2024: è il controllo che smaschera
+    un'estrazione sbagliata prima che finisca nel pezzo.</p>
+</section>
+
+<section>
+  <h2>Quello che non fa, e lo dice</h2>
+  <ul>
+    <li><strong>Non inventa i numeri mancanti.</strong> Un anno assente dal tracciato ISTAT
+      viene dichiarato «non disponibile», mai zero.</li>
+    <li><strong>Non nasconde i fallimenti.</strong> Le pagine senza testo estratto, i PDF
+      malformati, i record corrotti: tutto finisce nel conteggio finale.</li>
+    <li><strong>Non usa i social come prova.</strong> Un post è una traccia: va risalito
+      all'atto o verificato con due fonti indipendenti.</li>
+    <li><strong>Non manda i documenti riservati a terzi.</strong> Docling remoto e Jina
+      Reader si usano solo su atti pubblici; per gli altri c'è la modalità locale.</li>
+    <li><strong>Non promette ciò che le piattaforme vietano.</strong> Facebook, Instagram,
+      X e TikTok non sono automatizzabili: per quelli resta la consultazione manuale
+      documentata.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Installazione</h2>
+  <p>Python 3.11, un ambiente virtuale su disco esterno, sei dipendenze. Nessuna chiave,
+    nessuna registrazione, nessun costo.</p>
+<pre>uv venv --python 3.11 D:\fonti-primarie\.venv
+uv pip install --python D:\fonti-primarie\.venv\Scripts\python.exe trafilatura duckdb pytesseract pdfplumber pymupdf beautifulsoup4 yt-dlp
+
+python atti_pdf.py delibera.pdf --out delibera.md</pre>
+  <p>Serve anche <strong>Tesseract</strong> per l'OCR (con la lingua italiana) e
+    <strong>pdftotext</strong> per la lettura veloce: due binari gratuiti per Windows.</p>
+  <p style="margin-top:26px"><a class="bottone" href="https://github.com/DraculaCuti/fonti-primarie-it">Codice e documentazione su GitHub</a></p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Gli script sono distribuiti con licenza MIT. Le fonti citate negli esempi sono
+    documenti pubblici o corpus dimostrativi; nessun dato di inchiesta è incluso in questa
+    pagina.</p>
+</footer>
+</body>
+</html>
